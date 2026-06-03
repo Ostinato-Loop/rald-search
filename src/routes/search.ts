@@ -61,7 +61,7 @@ router.post("/", async (c) => {
         workspace_id: workspaceId, user_id: user.id, query: body.query.trim(),
         entity_scope: entities, result_count: results.total,
         searched_at: new Date().toISOString(),
-      }, { onConflict: "workspace_id,user_id,query" })
+      }, { onConflict: "workspace_id,user_id,query" }).then(() => undefined)
     );
   }
 
