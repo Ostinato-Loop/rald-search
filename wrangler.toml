@@ -16,20 +16,12 @@ id = "placeholder-replace-with-actual-kv-id"
 enabled = true
 head_sampling_rate = 1
 
-# Secrets — set via: wrangler secret put <NAME>
-# Required:
-#   SUPABASE_URL
-#   SUPABASE_SERVICE_ROLE_KEY
-#   RALD_JWT_SECRET
-# Optional (future providers):
-#   MEILISEARCH_HOST
-#   MEILISEARCH_API_KEY
-#   OPENSEARCH_HOST
-#   OPENSEARCH_API_KEY
-
 [env.production]
 name = "rald-search"
-vars = { ENVIRONMENT = "production", SEARCH_PROVIDER = "postgres" }
+
+[env.production.vars]
+ENVIRONMENT = "production"
+SEARCH_PROVIDER = "postgres"
 
 [[env.production.routes]]
 pattern = "search.rald.cloud/*"
@@ -37,4 +29,4 @@ zone_name = "rald.cloud"
 
 [[env.production.kv_namespaces]]
 binding = "RATE_LIMIT_KV"
-id = "REPLACE_WITH_PRODUCTION_KV_ID"
+id = "REPLACE_WITH_RATE_LIMIT_KV_ID"
