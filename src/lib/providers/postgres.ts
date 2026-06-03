@@ -31,8 +31,8 @@ export class PostgresSearchProvider implements SearchProvider {
       const table = ENTITY_TABLE[entity];
       if (!table) continue;
 
-      let q = this.db.from(table)
-        .select("id,entity_type,data,search_vector,ts_rank(search_vector, plainto_tsquery('english', $1))", { count: "exact" })
+      let q: any = (this.db.from(table) as any)
+        .select("id,entity_type,data", { count: "exact" })
         .eq("workspace_id", req.workspaceId)
         .is("deleted_at", null);
 
@@ -65,7 +65,7 @@ export class PostgresSearchProvider implements SearchProvider {
       if (error) { console.warn(`[postgres-search] ${entity} query error:`, error.message); continue; }
 
       totalCount += (count ?? 0);
-      for (const row of (data ?? []) as { id: string; entity_type: string; data: Record<string, unknown> }[]) {
+      for (const row of ((data ?? []) as unknown) as { id: string; entity_type: string; data: Record<string, unknown> }[]) {
         allHits.push({
           id: row.id, entity: entity as EntityType,
           score: 1.0, data: row.data, highlights: {},
