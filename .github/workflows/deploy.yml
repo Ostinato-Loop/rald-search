@@ -52,7 +52,7 @@ jobs:
           (async () => {
             const RATE_LIMIT_KV = await resolveId('rald-search-rate-limit');
             let toml = fs.readFileSync('wrangler.toml', 'utf8');
-            toml = toml.replace('REPLACE_WITH_RATE_LIMIT_KV_KV_ID', RATE_LIMIT_KV);
+            toml = toml.replace('REPLACE_WITH_RATE_LIMIT_KV_ID', RATE_LIMIT_KV);
             fs.writeFileSync('wrangler.toml', toml);
             console.log('wrangler.toml patched with real KV IDs.');
           })().catch(e => { console.error(e); process.exit(1); });
