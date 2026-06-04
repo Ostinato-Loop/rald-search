@@ -57,11 +57,13 @@ router.post("/", async (c) => {
   // Save as recent search (async, non-blocking)
   if (body.query.trim()) {
     c.executionCtx.waitUntil(
-      db.from("search_recent").upsert({
-        workspace_id: workspaceId, user_id: user.id, query: body.query.trim(),
-        entity_scope: entities, result_count: results.total,
-        searched_at: new Date().toISOString(),
-      }, { onConflict: "workspace_id,user_id,query" }).then(() => undefined)
+      (async () => {
+        await db.from("search_recent").upsert({
+          workspace_id: workspaceId, user_id: user.id, query: body.query.trim(),
+          entity_scope: entities, result_count: results.total,
+          searched_at: new Date().toISOString(),
+        }, { onConflict: "workspace_id,user_id,query" });
+      })()
     );
   }
 
