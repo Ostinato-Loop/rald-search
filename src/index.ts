@@ -14,7 +14,11 @@ import savedRoutes from "./routes/saved-searches";
 import recentRoutes from "./routes/recent-searches";
 import indexRoutes from "./routes/index-management";
 
-// KVNamespace provided globally by @cloudflare/workers-types
+export interface KVNamespace {
+  get(key: string): Promise<string | null>;
+  put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
+  delete(key: string): Promise<void>;
+}
 
 export type Bindings = {
   SUPABASE_URL: string;
