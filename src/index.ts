@@ -102,6 +102,12 @@ app.onError((err, c) => {
 
 export default {
   async fetch(req: Request, env: Bindings, ctx: ExecutionContext): Promise<Response> {
+    // ── Health bypass — liveness probes must always get a 200 ──────────
+    const pathname = new URL(req.url).pathname;
+    if (pathname === "/health" || pathname === "/healthz" || pathname === "/healthcheck" || pathname === "/readyz") {
+      return app.fetch(req, env, ctx);
+    }
+
     // ── FAIL FAST — service must not start with missing secrets ──────────
     const missing: string[] = [];
     if (!env.RALD_JWT_SECRET)           missing.push('RALD_JWT_SECRET');
