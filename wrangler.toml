@@ -1,12 +1,13 @@
 name = "rald-search"
 main = "src/index.ts"
-compatibility_date = "2025-01-01"
+compatibility_date = "2025-06-01"
 
 [vars]
 ENVIRONMENT = "production"
 SERVICE_NAME = "rald-search"
 SERVICE_VERSION = "1.0.0"
 SEARCH_PROVIDER = "postgres"
+SUPABASE_URL = "https://onxdcikfttdmnhofsuwo.supabase.co"
 
 [[routes]]
 pattern = "search.rald.cloud/*"
@@ -22,6 +23,5 @@ head_sampling_rate = 1
 
 # Secrets — pushed via deploy.yml using: wrangler secret put <NAME>
 # Required:
-#   SUPABASE_URL (org secret)
 #   SUPABASE_SERVICE_ROLE_KEY (org secret)
 #   RALD_JWT_SECRET
